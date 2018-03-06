@@ -3,6 +3,8 @@ package com.meiren.blockchain.service;
 import com.meiren.blockchain.entity.Block;
 import com.meiren.blockchain.entity.Store;
 
+import java.io.IOException;
+
 /**
  * @author jijiecong
  * @ClassName: BlockService
@@ -19,4 +21,6 @@ public interface BlockService {
 	public void writeToDisk(Block block, int nFile);
 
 	public Block readFromDisk(int nFile);
+
+	public void init() throws IOException;
 }

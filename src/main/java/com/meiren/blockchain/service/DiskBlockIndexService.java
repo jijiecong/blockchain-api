@@ -12,4 +12,6 @@ public interface DiskBlockIndexService {
 	public void writeToDisk(DiskBlockIndex diskBlockIndex);
 
 	public DiskBlockIndex readFromDisk();
+
+	public int getMaxnFile();
 }
