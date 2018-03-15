@@ -11,15 +11,15 @@ import java.nio.charset.StandardCharsets;
  * 
  * @author Michael Liao
  */
-public final class BitcoinInput implements AutoCloseable {
+public final class BlockChainInput implements AutoCloseable {
 
 	final InputStream in;
 
-	public BitcoinInput(InputStream in) {
+	public BlockChainInput(InputStream in) {
 		this.in = in;
 	}
 
-	public BitcoinInput(byte[] data) {
+	public BlockChainInput(byte[] data) {
 		this.in = new ByteArrayInputStream(data);
 	}
 

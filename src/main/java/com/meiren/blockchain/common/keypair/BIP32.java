@@ -2,8 +2,8 @@ package com.meiren.blockchain.common.keypair;
 
 
 
-import com.meiren.blockchain.common.BitcoinException;
-import com.meiren.blockchain.common.constant.BitcoinConstants;
+import com.meiren.blockchain.common.BlockChainException;
+import com.meiren.blockchain.common.constant.BlockChainConstants;
 import com.meiren.blockchain.common.util.Base58Utils;
 import com.meiren.blockchain.common.util.BytesUtils;
 import com.meiren.blockchain.common.util.HashUtils;
@@ -15,7 +15,7 @@ public class BIP32 {
 
 	static BIP32Key generateMasterKey(BigInteger seed) {
 		if (seed.signum() < 0) {
-			throw new BitcoinException("Seed must be positive.");
+			throw new BlockChainException("Seed must be positive.");
 		}
 		byte[] seedBytes = seed.toByteArray();
 		if (seedBytes.length % 2 == 1) {
@@ -28,18 +28,18 @@ public class BIP32 {
 			}
 		}
 		if (seedBytes.length > 128) {
-			throw new BitcoinException("Seed length exceeded than 64 bytes.");
+			throw new BlockChainException("Seed length exceeded than 64 bytes.");
 		}
 		if (seedBytes.length < 16) {
 			byte[] copied = new byte[16];
 			System.arraycopy(seedBytes, 0, copied, copied.length - seedBytes.length, seedBytes.length);
 			seedBytes = copied;
 		}
-		byte[] rawHash = HashUtils.hmacSha512(seedBytes, "Bitcoin seed");
+		byte[] rawHash = HashUtils.hmacSha512(seedBytes, "BlockChain seed");
 		byte[] IL = Arrays.copyOfRange(rawHash, 0, 32);
 		byte[] IR = Arrays.copyOfRange(rawHash, 32, 64);
-		return new BIP32Key(BitcoinConstants.MAINNET_BIP32_PRIVATE, 0, new byte[4], 0, IR,
-				BytesUtils.concat(IL, BitcoinConstants.PRIVATE_KEY_SUFFIX_ARRAY));
+		return new BIP32Key(BlockChainConstants.MAINNET_BIP32_PRIVATE, 0, new byte[4], 0, IR,
+				BytesUtils.concat(IL, BlockChainConstants.PRIVATE_KEY_SUFFIX_ARRAY));
 	}
 
 	public static class BIP32Key {
@@ -52,21 +52,21 @@ public class BIP32 {
 
 		public BIP32Key(int version, int depth, byte[] fingerprint, int index, byte[] chainCode, byte[] key) {
 			if (depth < 0 || depth > 255) {
-				throw new BitcoinException("Invalid depth: " + depth);
+				throw new BlockChainException("Invalid depth: " + depth);
 			}
 			if (key.length != 33) {
-				throw new BitcoinException("Invalid key: expected 33 bytes but actual " + key.length + " bytes.");
+				throw new BlockChainException("Invalid key: expected 33 bytes but actual " + key.length + " bytes.");
 			}
-			if (version == BitcoinConstants.MAINNET_BIP32_PRIVATE
-					|| version == BitcoinConstants.TESTNET_BIP32_PRIVATE) {
+			if (version == BlockChainConstants.MAINNET_BIP32_PRIVATE
+					|| version == BlockChainConstants.TESTNET_BIP32_PRIVATE) {
 				key = BytesUtils.concat(new byte[] { 0x00 }, Arrays.copyOf(key, 32));
 			}
 			if (chainCode.length != 32) {
-				throw new BitcoinException(
+				throw new BlockChainException(
 						"Invalid chain code: expected 32 bytes but actual " + chainCode.length + " bytes.");
 			}
 			if (fingerprint.length != 4) {
-				throw new BitcoinException("Invalid fingerprint: " + fingerprint.length + " bytes.");
+				throw new BlockChainException("Invalid fingerprint: " + fingerprint.length + " bytes.");
 			}
 			this.version = version;
 			this.depth = depth;
@@ -94,9 +94,9 @@ public class BIP32 {
 			int index = BytesUtils.bytesToInt(Arrays.copyOfRange(data, 9, 13));
 			byte[] chainCode = Arrays.copyOfRange(data, 13, 45);
 			byte[] key = Arrays.copyOfRange(data, 45, 78);
-			if (version == BitcoinConstants.MAINNET_BIP32_PRIVATE
-					|| version == BitcoinConstants.TESTNET_BIP32_PRIVATE) {
-				key = BytesUtils.concat(Arrays.copyOfRange(key, 1, 33), BitcoinConstants.PRIVATE_KEY_SUFFIX_ARRAY);
+			if (version == BlockChainConstants.MAINNET_BIP32_PRIVATE
+					|| version == BlockChainConstants.TESTNET_BIP32_PRIVATE) {
+				key = BytesUtils.concat(Arrays.copyOfRange(key, 1, 33), BlockChainConstants.PRIVATE_KEY_SUFFIX_ARRAY);
 			}
 			return new BIP32Key(version, depth, fingerprint, index, chainCode, key);
 		}

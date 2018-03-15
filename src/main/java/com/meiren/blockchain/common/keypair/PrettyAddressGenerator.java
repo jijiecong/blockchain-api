@@ -1,7 +1,7 @@
 package com.meiren.blockchain.common.keypair;
 
 
-import com.meiren.blockchain.common.constant.BitcoinConstants;
+import com.meiren.blockchain.common.constant.BlockChainConstants;
 
 import java.util.Scanner;
 
@@ -28,7 +28,7 @@ public class PrettyAddressGenerator {
 				System.exit(1);
 			}
 			for (int i = 0; i < input.length(); i++) {
-				if (BitcoinConstants.BASE58_CHARS.indexOf(input.charAt(i)) == (-1)) {
+				if (BlockChainConstants.BASE58_CHARS.indexOf(input.charAt(i)) == (-1)) {
 					System.err.println("Invalid char: " + input.charAt(i));
 					System.exit(1);
 				}

@@ -5,7 +5,7 @@ import com.meiren.blockchain.common.util.HashUtils;
 
 import java.math.BigInteger;
 
-public final class BitcoinConstants {
+public final class BlockChainConstants {
 
 	/**
 	 * Magic number for bitcoin message.

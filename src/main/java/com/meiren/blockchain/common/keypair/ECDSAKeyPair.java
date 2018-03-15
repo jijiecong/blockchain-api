@@ -1,7 +1,7 @@
 package com.meiren.blockchain.common.keypair;
 
 
-import com.meiren.blockchain.common.constant.BitcoinConstants;
+import com.meiren.blockchain.common.constant.BlockChainConstants;
 import com.meiren.blockchain.common.util.Base58Utils;
 import com.meiren.blockchain.common.util.BytesUtils;
 import com.meiren.blockchain.common.util.HashUtils;
@@ -80,7 +80,7 @@ public class ECDSAKeyPair {
 		BigInteger[] keys = getPublicKey();
 		byte[] xs = bigIntegerToBytes(keys[0], 32);
 		byte[] ys = bigIntegerToBytes(keys[1], 32);
-		return BytesUtils.concat(BitcoinConstants.PUBLIC_KEY_PREFIX_ARRAY, xs, ys);
+		return BytesUtils.concat(BlockChainConstants.PUBLIC_KEY_PREFIX_ARRAY, xs, ys);
 	}
 
 	public String toEncodedUncompressedPublicKey() {
@@ -95,9 +95,9 @@ public class ECDSAKeyPair {
 		byte[] xs = bigIntegerToBytes(keys[0], 32);
 		byte[] ys = bigIntegerToBytes(keys[1], 32);
 		if ((ys[31] & 0xff) % 2 == 0) {
-			return BytesUtils.concat(BitcoinConstants.PUBLIC_KEY_COMPRESSED_02, xs);
+			return BytesUtils.concat(BlockChainConstants.PUBLIC_KEY_COMPRESSED_02, xs);
 		} else {
-			return BytesUtils.concat(BitcoinConstants.PUBLIC_KEY_COMPRESSED_03, xs);
+			return BytesUtils.concat(BlockChainConstants.PUBLIC_KEY_COMPRESSED_03, xs);
 		}
 	}
 
@@ -129,11 +129,11 @@ public class ECDSAKeyPair {
 
 	/**
 	 * Get uncompressed Wallet Import Format string defined in:
-	 * https://en.bitcoin.it/wiki/Wallet_import_format
+	 * https://en.BlockChain.it/wiki/Wallet_import_format
 	 */
 	public String toUncompressedWIF() {
 		byte[] key = bigIntegerToBytes(this.privateKey, 32);
-		byte[] extendedKey = BytesUtils.concat(BitcoinConstants.PRIVATE_KEY_PREFIX_ARRAY, key);
+		byte[] extendedKey = BytesUtils.concat(BlockChainConstants.PRIVATE_KEY_PREFIX_ARRAY, key);
 		byte[] hash = HashUtils.doubleSha256(extendedKey);
 		byte[] checksum = Arrays.copyOfRange(hash, 0, 4);
 		byte[] extendedKeyWithChecksum = BytesUtils.concat(extendedKey, checksum);
@@ -142,12 +142,12 @@ public class ECDSAKeyPair {
 
 	/**
 	 * Get Compressed Wallet Import Format string defined in:
-	 * https://en.bitcoin.it/wiki/Wallet_import_format
+	 * https://en.BlockChain.it/wiki/Wallet_import_format
 	 */
 	public String toCompressedWIF() {
 		byte[] key = bigIntegerToBytes(this.privateKey, 32);
-		byte[] extendedKey = BytesUtils.concat(BitcoinConstants.PRIVATE_KEY_PREFIX_ARRAY, key,
-				BitcoinConstants.PRIVATE_KEY_SUFFIX_ARRAY);
+		byte[] extendedKey = BytesUtils.concat(BlockChainConstants.PRIVATE_KEY_PREFIX_ARRAY, key,
+				BlockChainConstants.PRIVATE_KEY_SUFFIX_ARRAY);
 		byte[] hash = HashUtils.doubleSha256(extendedKey);
 		byte[] checksum = Arrays.copyOfRange(hash, 0, 4);
 		byte[] extendedKeyWithChecksum = BytesUtils.concat(extendedKey, checksum);
@@ -159,14 +159,14 @@ public class ECDSAKeyPair {
 	 */
 	public static byte[] parseWIF(String wif) {
 		byte[] data = Base58Utils.decodeChecked(wif);
-		if (data[0] != BitcoinConstants.PRIVATE_KEY_PREFIX) {
+		if (data[0] != BlockChainConstants.PRIVATE_KEY_PREFIX) {
 			throw new IllegalArgumentException("Leading byte is not 0x80.");
 		}
 		if (wif.charAt(0) == '5') {
 			// remove first 0x80:
 			return Arrays.copyOfRange(data, 1, data.length);
 		} else {
-			if (data[data.length - 1] != BitcoinConstants.PRIVATE_KEY_SUFFIX) {
+			if (data[data.length - 1] != BlockChainConstants.PRIVATE_KEY_SUFFIX) {
 				throw new IllegalArgumentException("Ending byte is not 0x01.");
 			}
 			// remove first 0x80 and last 0x01:
@@ -216,10 +216,10 @@ public class ECDSAKeyPair {
 		if (bi == null) {
 			throw new IllegalArgumentException("Private key is null.");
 		}
-		if (bi.compareTo(BitcoinConstants.MIN_PRIVATE_KEY) == (-1)) {
+		if (bi.compareTo(BlockChainConstants.MIN_PRIVATE_KEY) == (-1)) {
 			throw new IllegalArgumentException("Private key is too small.");
 		}
-		if (bi.compareTo(BitcoinConstants.MAX_PRIVATE_KEY) == 1) {
+		if (bi.compareTo(BlockChainConstants.MAX_PRIVATE_KEY) == 1) {
 			throw new IllegalArgumentException("Private key is too large.");
 		}
 	}

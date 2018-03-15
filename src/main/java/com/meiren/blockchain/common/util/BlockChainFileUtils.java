@@ -32,11 +32,11 @@ public class BlockChainFileUtils {
 			//如果文件不存在，则创建新的文件
 			if (!file.exists()) {
 				file.createNewFile();
-				bool = true;
-				System.out.println("success create file,the file is " + filenameTemp);
-				//创建文件成功后，写入内容到文件里
-				writeFileContent(filenameTemp, filein);
 			}
+			System.out.println("success create file,the file is " + filenameTemp);
+			//创建文件成功后，写入内容到文件里
+			writeFileContent(filenameTemp, filein);
+			bool = true;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -136,7 +136,7 @@ public class BlockChainFileUtils {
 //		byte[] bs = new byte[] { 1, 2, 3, 4, 5 };
 //		BlockChainFileUtils.createFile("blk0001", bs);
 //		try {
-//			byte[] result = BlockChainFileUtils.readFiletoByteArray("D:\\github\\cryptocurrency\\bitcoin-datastruct\\src\\test\\resources\\block-000000000000000000f061205567dc79c4e718209a568879d66132e016968ac6.dat");
+//			byte[] result = BlockChainFileUtils.readFiletoByteArray("D:\\github\\cryptocurrency\\BlockChain-datastruct\\src\\test\\resources\\block-000000000000000000f061205567dc79c4e718209a568879d66132e016968ac6.dat");
 //			System.out.println(result);
 //		} catch (IOException e) {
 //			e.printStackTrace();

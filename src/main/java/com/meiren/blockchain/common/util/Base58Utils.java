@@ -1,14 +1,14 @@
 package com.meiren.blockchain.common.util;
 
 
-import com.meiren.blockchain.common.constant.BitcoinConstants;
+import com.meiren.blockchain.common.constant.BlockChainConstants;
 
 import java.math.BigInteger;
 import java.util.Arrays;
 
 public class Base58Utils {
 
-	static final char[] ALPHABET = BitcoinConstants.BASE58_CHARS.toCharArray();
+	static final char[] ALPHABET = BlockChainConstants.BASE58_CHARS.toCharArray();
 	static final char ENCODED_ZERO = ALPHABET[0];
 	static final int[] INDEXES = new int[128];
 

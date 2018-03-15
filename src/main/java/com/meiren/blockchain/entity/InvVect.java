@@ -1,8 +1,8 @@
 package com.meiren.blockchain.entity;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.meiren.blockchain.common.io.BitcoinInput;
-import com.meiren.blockchain.common.io.BitcoinOutput;
+import com.meiren.blockchain.common.io.BlockChainInput;
+import com.meiren.blockchain.common.io.BlockChainOutput;
 import com.meiren.blockchain.common.serializer.HashSerializer;
 
 import java.io.IOException;
@@ -53,12 +53,12 @@ public class InvVect {
 	public InvVect() {
 	}
 
-	public InvVect(BitcoinInput input) throws IOException {
+	public InvVect(BlockChainInput input) throws IOException {
 		this.type = input.readInt();
 		this.hash = input.readBytes(32);
 	}
 
 	public byte[] toByteArray() {
-		return new BitcoinOutput().writeInt(this.type).write(this.hash).toByteArray();
+		return new BlockChainOutput().writeInt(this.type).write(this.hash).toByteArray();
 	}
 }

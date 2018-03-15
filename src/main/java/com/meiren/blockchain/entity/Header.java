@@ -1,8 +1,8 @@
 package com.meiren.blockchain.entity;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.meiren.blockchain.common.io.BitcoinInput;
-import com.meiren.blockchain.common.io.BitcoinOutput;
+import com.meiren.blockchain.common.io.BlockChainInput;
+import com.meiren.blockchain.common.io.BlockChainOutput;
 import com.meiren.blockchain.common.serializer.HashSerializer;
 import com.meiren.blockchain.common.serializer.TimestampSerializer;
 
@@ -55,7 +55,7 @@ public class Header implements Serializable {
 
 	public Header(){}
 
-	public Header(BitcoinInput input) throws IOException {
+	public Header(BlockChainInput input) throws IOException {
 		this.version = input.readInt();
 		this.prevHash = input.readBytes(32);
 		this.merkleHash = input.readBytes(32);
@@ -65,7 +65,7 @@ public class Header implements Serializable {
 	}
 
 	public byte[] toByteArray() {
-		return new BitcoinOutput().writeInt(this.version).write(this.prevHash).write(this.merkleHash)
+		return new BlockChainOutput().writeInt(this.version).write(this.prevHash).write(this.merkleHash)
 				.writeUnsignedInt(this.timestamp).writeUnsignedInt(this.bits).writeUnsignedInt(this.nonce)
 				.toByteArray();
 	}

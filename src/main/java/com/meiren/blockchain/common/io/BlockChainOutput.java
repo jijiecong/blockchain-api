@@ -9,15 +9,15 @@ import java.nio.charset.StandardCharsets;
  * 
  * @author Michael Liao
  */
-public final class BitcoinOutput {
+public final class BlockChainOutput {
 
 	ByteArrayOutputStream out;
 
-	public BitcoinOutput() {
+	public BlockChainOutput() {
 		this.out = new ByteArrayOutputStream(1024);
 	}
 
-	public BitcoinOutput write(byte[] bytes) {
+	public BlockChainOutput write(byte[] bytes) {
 		try {
 			out.write(bytes);
 		} catch (IOException e) {
@@ -26,18 +26,18 @@ public final class BitcoinOutput {
 		return this;
 	}
 
-	public BitcoinOutput writeByte(int v) {
+	public BlockChainOutput writeByte(int v) {
 		out.write(v);
 		return this;
 	}
 
-	public BitcoinOutput writeShort(short v) {
+	public BlockChainOutput writeShort(short v) {
 		out.write(0xff & v);
 		out.write(0xff & (v >> 8));
 		return this;
 	}
 
-	public BitcoinOutput writeInt(int v) {
+	public BlockChainOutput writeInt(int v) {
 		out.write(0xff & v);
 		out.write(0xff & (v >> 8));
 		out.write(0xff & (v >> 16));
@@ -45,7 +45,7 @@ public final class BitcoinOutput {
 		return this;
 	}
 
-	public BitcoinOutput writeLong(long v) {
+	public BlockChainOutput writeLong(long v) {
 		out.write((int) (0xff & v));
 		out.write((int) (0xff & (v >> 8)));
 		out.write((int) (0xff & (v >> 16)));
@@ -57,7 +57,7 @@ public final class BitcoinOutput {
 		return this;
 	}
 
-	public BitcoinOutput writeVarInt(long n) {
+	public BlockChainOutput writeVarInt(long n) {
 		if (n < 0xfd) {
 			writeByte((int) n);
 		} else if (n <= 0xffff) {
@@ -74,19 +74,19 @@ public final class BitcoinOutput {
 		return this;
 	}
 
-	public BitcoinOutput writeUnsignedInt(long ln) {
+	public BlockChainOutput writeUnsignedInt(long ln) {
 		int n = (int) (0xffffffff & ln);
 		writeInt(n);
 		return this;
 	}
 
-	public BitcoinOutput writeUnsignedShort(int i) {
+	public BlockChainOutput writeUnsignedShort(int i) {
 		short n = (short) (0xffff & i);
 		writeShort(n);
 		return this;
 	}
 
-	public BitcoinOutput writeString(String str) {
+	public BlockChainOutput writeString(String str) {
 		byte[] bs = str.getBytes(StandardCharsets.UTF_8);
 		writeVarInt(bs.length);
 		write(bs);

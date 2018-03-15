@@ -1,6 +1,6 @@
 package com.meiren.blockchain.common.util;
 
-import com.meiren.blockchain.common.constant.BitcoinConstants;
+import com.meiren.blockchain.common.constant.BlockChainConstants;
 import org.bouncycastle.asn1.ASN1InputStream;
 import org.bouncycastle.asn1.ASN1Integer;
 import org.bouncycastle.asn1.DERSequenceGenerator;
@@ -73,7 +73,7 @@ public class Secp256k1Utils {
 	public static byte[] toPublicKey(BigInteger[] pubKeys) {
 		byte[] xs = bigIntegerToBytes(pubKeys[0], 32);
 		byte[] ys = bigIntegerToBytes(pubKeys[1], 32);
-		return BytesUtils.concat(BitcoinConstants.PUBLIC_KEY_PREFIX_ARRAY, xs, ys);
+		return BytesUtils.concat(BlockChainConstants.PUBLIC_KEY_PREFIX_ARRAY, xs, ys);
 	}
 
 	static byte[] bigIntegerToBytes(BigInteger bi, int length) {
@@ -148,7 +148,7 @@ public class Secp256k1Utils {
 	}
 
 	private static String _hash160PublicKeyToAddress(byte[] hash160) {
-		byte[] hashWithNetworkId = BytesUtils.concat(BitcoinConstants.NETWORK_ID_ARRAY, hash160);
+		byte[] hashWithNetworkId = BytesUtils.concat(BlockChainConstants.NETWORK_ID_ARRAY, hash160);
 		byte[] checksum = HashUtils.doubleSha256(hashWithNetworkId);
 		byte[] address = BytesUtils.concat(hashWithNetworkId, Arrays.copyOfRange(checksum, 0, 4));
 		return Base58Utils.encode(address);
@@ -159,7 +159,7 @@ public class Secp256k1Utils {
 		if (data.length != 21) {
 			throw new IllegalArgumentException("bad length of decoded bytes: expect 21 but actual " + data.length);
 		}
-		if (data[0] != BitcoinConstants.NETWORK_ID) {
+		if (data[0] != BlockChainConstants.NETWORK_ID) {
 			throw new IllegalArgumentException("Leading byte is not 0x00.");
 		}
 		return Arrays.copyOfRange(data, 1, data.length);

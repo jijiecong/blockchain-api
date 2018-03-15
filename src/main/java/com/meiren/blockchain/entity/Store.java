@@ -1,8 +1,8 @@
 package com.meiren.blockchain.entity;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.meiren.blockchain.common.io.BitcoinInput;
-import com.meiren.blockchain.common.io.BitcoinOutput;
+import com.meiren.blockchain.common.io.BlockChainInput;
+import com.meiren.blockchain.common.io.BlockChainOutput;
 import com.meiren.blockchain.common.serializer.HashSerializer;
 import com.meiren.blockchain.common.serializer.HexSerializer;
 import com.meiren.blockchain.common.serializer.LockTimeSerializer;
@@ -48,7 +48,7 @@ public class Store implements Serializable {
 
 	private byte[] storeHash = null;
 
-	public Store(BitcoinInput input) throws IOException {
+	public Store(BlockChainInput input) throws IOException {
 		this.version = input.readInt();
 		long storeScriptLength = input.readVarInt();
 		this.storeScript = input.readBytes((int) storeScriptLength);
@@ -67,7 +67,7 @@ public class Store implements Serializable {
 	}
 
 	public byte[] toByteArray() {
-		BitcoinOutput buffer = new BitcoinOutput();
+		BlockChainOutput buffer = new BlockChainOutput();
 		buffer.writeInt(this.version);
 		buffer.writeVarInt(this.storeScript.length);
 		buffer.write(this.storeScript);
@@ -75,9 +75,9 @@ public class Store implements Serializable {
 		return buffer.toByteArray();
 	}
 
-	// http://bitcoin.stackexchange.com/questions/3374/how-to-redeem-a-basic-tx
+	// http://BlockChain.stackexchange.com/questions/3374/how-to-redeem-a-basic-tx
 	public void validate() {
-		BitcoinOutput output = new BitcoinOutput();
+		BlockChainOutput output = new BlockChainOutput();
 		output.writeInt(this.version);
 		// TODO:
 	}

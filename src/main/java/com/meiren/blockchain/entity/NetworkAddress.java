@@ -1,9 +1,9 @@
 package com.meiren.blockchain.entity;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.meiren.blockchain.common.constant.BitcoinConstants;
-import com.meiren.blockchain.common.io.BitcoinInput;
-import com.meiren.blockchain.common.io.BitcoinOutput;
+import com.meiren.blockchain.common.constant.BlockChainConstants;
+import com.meiren.blockchain.common.io.BlockChainInput;
+import com.meiren.blockchain.common.io.BlockChainOutput;
 import com.meiren.blockchain.common.serializer.IPv6Serializer;
 import com.meiren.blockchain.common.serializer.TimestampSerializer;
 import com.meiren.blockchain.common.util.NetworkUtils;
@@ -41,7 +41,7 @@ public class NetworkAddress {
 	public NetworkAddress() {
 	}
 
-	public NetworkAddress(BitcoinInput input, boolean excludeTime) throws IOException {
+	public NetworkAddress(BlockChainInput input, boolean excludeTime) throws IOException {
 		if (!excludeTime) {
 			this.time = input.readUnsignedInt();
 		}
@@ -54,11 +54,11 @@ public class NetworkAddress {
 		this.time = Instant.now().getEpochSecond();
 		this.services = 1;
 		this.ipv6 = NetworkUtils.getIPv6(addr);
-		this.port = BitcoinConstants.PORT;
+		this.port = BlockChainConstants.PORT;
 	}
 
 	public byte[] toByteArray(boolean excludeTime) {
-		BitcoinOutput output = new BitcoinOutput();
+		BlockChainOutput output = new BlockChainOutput();
 		if (!excludeTime) {
 			output.writeUnsignedInt(this.time); // time
 		}
@@ -68,7 +68,7 @@ public class NetworkAddress {
 		return output.toByteArray();
 	}
 
-	public static NetworkAddress parse(BitcoinInput input, boolean excludeTime) throws IOException {
+	public static NetworkAddress parse(BlockChainInput input, boolean excludeTime) throws IOException {
 		NetworkAddress addr = new NetworkAddress();
 		if (!excludeTime) {
 			addr.time = input.readUnsignedInt();

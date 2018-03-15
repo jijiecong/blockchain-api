@@ -1,7 +1,7 @@
 package com.meiren.blockchain.entity;
 
 
-import com.meiren.blockchain.common.io.BitcoinInput;
+import com.meiren.blockchain.common.io.BlockChainInput;
 
 import java.io.IOException;
 
@@ -17,7 +17,7 @@ public class Inv {
 	public Inv() {
 	}
 
-	public Inv(BitcoinInput input) throws IOException {
+	public Inv(BlockChainInput input) throws IOException {
 		long count = input.readVarInt(); // do not store count
 		this.inventory = new InvVect[(int) count];
 		for (int i = 0; i < this.inventory.length; i++) {

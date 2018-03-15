@@ -2,8 +2,8 @@ package com.meiren.blockchain.entity;
 
 
 
-import com.meiren.blockchain.common.io.BitcoinInput;
-import com.meiren.blockchain.common.io.BitcoinOutput;
+import com.meiren.blockchain.common.io.BlockChainInput;
+import com.meiren.blockchain.common.io.BlockChainOutput;
 import com.meiren.blockchain.common.util.BytesUtils;
 import com.meiren.blockchain.common.util.HashUtils;
 
@@ -57,7 +57,7 @@ public class Block implements Serializable {
 		return results;
 	}
 
-	public Block(BitcoinInput input) throws IOException {
+	public Block(BlockChainInput input) throws IOException {
 		this.header = new Header(input);
 		long storeCount = input.readVarInt(); // do not store txn_count
 		this.stores = new Store[(int) storeCount];
@@ -67,7 +67,7 @@ public class Block implements Serializable {
 	}
 
 	public byte[] toByteArray() {
-		BitcoinOutput output = new BitcoinOutput();
+		BlockChainOutput output = new BlockChainOutput();
 		output.write(header.toByteArray());
 		output.writeVarInt(this.stores.length);
 		for (Store store : stores) {
