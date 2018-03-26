@@ -5,7 +5,7 @@ import com.meiren.blockchain.common.io.BlockChainInput;
 import com.meiren.blockchain.common.io.BlockChainOutput;
 import com.meiren.blockchain.common.serializer.HashSerializer;
 import com.meiren.blockchain.common.serializer.HexSerializer;
-import com.meiren.blockchain.common.serializer.LockTimeSerializer;
+import com.meiren.blockchain.common.serializer.TimestampSerializer;
 import com.meiren.blockchain.common.util.HashUtils;
 
 import java.io.IOException;
@@ -43,7 +43,7 @@ public class Store implements Serializable {
 	 * lock_time is irrelevant. Otherwise, the transaction may not be added to a
 	 * block until after lock_time (see NLockTime).
 	 */
-	@JsonSerialize(using = LockTimeSerializer.class)
+	@JsonSerialize(using = TimestampSerializer.class)
 	public long lock_time;
 
 	private byte[] storeHash = null;
