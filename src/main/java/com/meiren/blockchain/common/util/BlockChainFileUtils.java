@@ -24,7 +24,7 @@ public class BlockChainFileUtils {
 	 * @param filein 文件内容
 	 * @return 是否创建成功，成功则返回true
 	 */
-	public static boolean createFile(String path, String fileName, byte[] filein) {
+	public static boolean createFile(String path, String fileName, byte[] filein, Boolean append) {
 		Boolean bool = false;
 		filenameTemp = path + fileName + ".dat";//文件路径+名称+文件类型
 		File file = new File(filenameTemp);
@@ -35,7 +35,7 @@ public class BlockChainFileUtils {
 			}
 			System.out.println("success create file,the file is " + filenameTemp);
 			//创建文件成功后，写入内容到文件里
-			writeFileContent(filenameTemp, filein);
+			writeFileContent(filenameTemp, filein, append);
 			bool = true;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -52,14 +52,14 @@ public class BlockChainFileUtils {
 	 * @return
 	 * @throws IOException
 	 */
-	public static boolean writeFileContent(String filepath, byte[] filein) throws IOException {
+	public static boolean writeFileContent(String filepath, byte[] filein, Boolean append) throws IOException {
 		Boolean bool = false;
 		String temp = "";
 
 		FileOutputStream fos = null;
 		try {
 			File file = new File(filepath);//文件路径(包括文件名称)
-			fos = new FileOutputStream(file);
+			fos = new FileOutputStream(file, append);
 			fos.write(filein);
 			bool = true;
 		} catch (Exception e) {
@@ -132,17 +132,35 @@ public class BlockChainFileUtils {
 		}
 	}
 
+	/**
+	 * 读取文件大小
+	 *
+	 * @param filePath 文件名称
+	 * @return
+	 * */
+	public static long getFileSize(String filePath){
+		File file = new File(filePath);
+		if(file == null){
+			return 0L;
+		}
+		return file.length();
+	}
+
 	public static void main(String[] args) {
-//		byte[] bs = new byte[] { 1, 2, 3, 4, 5 };
-//		BlockChainFileUtils.createFile("blk0001", bs);
+		byte[] bs = new byte[] { 6, 7, 8, 9, 10 };
+		System.out.println(bs.length);
+//		BlockChainFileUtils.createFile("D:\\meiren\\", "test", bs, Boolean.TRUE);
 //		try {
 //			byte[] result = BlockChainFileUtils.readFiletoByteArray("D:\\github\\cryptocurrency\\BlockChain-datastruct\\src\\test\\resources\\block-000000000000000000f061205567dc79c4e718209a568879d66132e016968ac6.dat");
 //			System.out.println(result);
 //		} catch (IOException e) {
 //			e.printStackTrace();
 //		}
-			byte[] result = BlockChainFileUtils.readFiletoByteArray("D:\\meiren\\blk0001.dat");
-			System.out.println(result);
+		byte[] result = BlockChainFileUtils.readFiletoByteArray("D:\\meiren\\test.dat");
+		byte[] result1 = new byte[5];
+		System.arraycopy(result, 5, result1, 0, 5);
+		System.out.println(result1);
+
 
 	}
 

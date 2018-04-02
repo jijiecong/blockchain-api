@@ -18,9 +18,9 @@ public interface BlockService {
 
 	public void getLastestBlockHash();
 
-	public void writeToDisk(Block block, int nFile);
+	public void writeToDisk(Block block, int nFile, Boolean append);
 
-	public Block readFromDisk(int nFile);
+	public Block readFromDisk(int nFile, int begin, int end);
 
 	public void init() throws IOException;
 }
