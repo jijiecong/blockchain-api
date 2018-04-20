@@ -9,7 +9,7 @@
   <artifactId>blockchain-api</artifactId>
   <packaging>jar</packaging>
   <name>blockchain-api</name>
-  <version>1.0.1-SNAPSHOT</version>
+  <version>1.0.1.1-SNAPSHOT</version>
   <description>the shared for distribute task system API</description>
 
   <build>

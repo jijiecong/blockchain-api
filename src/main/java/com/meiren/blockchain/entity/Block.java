@@ -2,8 +2,10 @@ package com.meiren.blockchain.entity;
 
 
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.meiren.blockchain.common.io.BlockChainInput;
 import com.meiren.blockchain.common.io.BlockChainOutput;
+import com.meiren.blockchain.common.serializer.HashSerializer;
 import com.meiren.blockchain.common.util.BytesUtils;
 import com.meiren.blockchain.common.util.HashUtils;
 
@@ -18,8 +20,9 @@ import java.io.Serializable;
 public class Block implements Serializable {
 
 	public Header header;
-	public Store[] stores;
+	public Transaction[] transactions;
 
+	@JsonSerialize(using = HashSerializer.class)
 	private byte[] blockHash = null;
 
 	public Block (){}
@@ -33,8 +36,8 @@ public class Block implements Serializable {
 	}
 
 	public byte[] calculateMerkleHash() {
-		byte[][] hashes = java.util.Arrays.asList(this.stores).stream().map((store) -> {
-			return store.getStoreHash();
+		byte[][] hashes = java.util.Arrays.asList(this.transactions).stream().map((transaction) -> {
+			return transaction.getTxHash();
 		}).toArray(byte[][]::new);
 		while (hashes.length > 1) {
 			hashes = merkleHash(hashes);
@@ -59,19 +62,19 @@ public class Block implements Serializable {
 
 	public Block(BlockChainInput input) throws IOException {
 		this.header = new Header(input);
-		long storeCount = input.readVarInt(); // do not store txn_count
-		this.stores = new Store[(int) storeCount];
-		for (int i = 0; i < this.stores.length; i++) {
-			this.stores[i] = new Store(input);
+		long txCount = input.readVarInt(); // do not store txn_count
+		this.transactions = new Transaction[(int)txCount];
+		for (int i = 0; i < this.transactions.length; i++) {
+			this.transactions[i] = new Transaction(input);
 		}
 	}
 
 	public byte[] toByteArray() {
 		BlockChainOutput output = new BlockChainOutput();
 		output.write(header.toByteArray());
-		output.writeVarInt(this.stores.length);
-		for (Store store : stores) {
-			output.write(store.toByteArray());
+		output.writeVarInt(this.transactions.length);
+		for (Transaction transaction : transactions) {
+			output.write(transaction.toByteArray());
 		}
 		return output.toByteArray();
 	}

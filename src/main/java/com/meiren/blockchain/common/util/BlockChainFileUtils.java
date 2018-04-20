@@ -106,6 +106,7 @@ public class BlockChainFileUtils {
 		ByteArrayOutputStream out = null;
 		try {
 			in = new FileInputStream(filePath);
+//			in.skip(10L);
 			out = new ByteArrayOutputStream();
 			byte[] buffer = new byte[1024];
 			int n = 0;

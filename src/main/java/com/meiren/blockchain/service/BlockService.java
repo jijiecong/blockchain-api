@@ -2,6 +2,7 @@ package com.meiren.blockchain.service;
 
 import com.meiren.blockchain.entity.Block;
 import com.meiren.blockchain.entity.Store;
+import com.meiren.blockchain.entity.Transaction;
 
 import java.io.IOException;
 
@@ -14,7 +15,7 @@ import java.io.IOException;
 public interface BlockService {
 	public void importBlockChain();
 
-	public Block nextBlock(Store[] stores, byte[] prevHash);
+	public Block nextBlock(Transaction[] transactions, byte[] prevHash);
 
 	public void getLastestBlockHash();
 
@@ -23,4 +24,9 @@ public interface BlockService {
 	public Block readFromDisk(int nFile, int begin, int end);
 
 	public void init() throws IOException;
+
+	public Block readFromDiskBySize(int nFile, int begin, int size);
+
+	public void sendTransaction(Transaction transaction);
+
 }

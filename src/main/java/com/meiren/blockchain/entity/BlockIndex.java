@@ -24,7 +24,8 @@ public class BlockIndex {
 	public int nBlockPos;
 	// block height
 	public int nHeight;
-
+	//
+	public int nBlockSize;
 
 	// block header
 	/**

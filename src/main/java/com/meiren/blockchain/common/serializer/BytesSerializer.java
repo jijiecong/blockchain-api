@@ -14,12 +14,12 @@ import java.io.IOException;
  * 
  * @author Michael Liao
  */
-public class HashSerializer extends JsonSerializer<byte[]> {
+public class BytesSerializer extends JsonSerializer<byte[]> {
 
 	@Override
 	public void serialize(byte[] value, JsonGenerator gen, SerializerProvider serializers)
 			throws IOException, JsonProcessingException {
-		String s = HashUtils.toHexStringAsLittleEndian(value);
+		String s = new String(value);
 		gen.writeString(s);
 	}
 
