@@ -19,9 +19,9 @@ public class DiskUTxOIndex {
 	//tx Hash
 	public byte[] txHash;
 
-	public Long txIndex;
+	public long txIndex;
 
-	public Long outIndex;
+	public long outIndex;
 
 	public byte[] receiver;
 }

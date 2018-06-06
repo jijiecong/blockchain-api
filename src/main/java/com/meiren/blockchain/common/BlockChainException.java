@@ -3,7 +3,7 @@ package com.meiren.blockchain.common;
 /**
  * Base exception for bitcoin app.
  * 
- * @author liaoxuefeng
+ * @author jijc
  */
 public class BlockChainException extends RuntimeException {
 

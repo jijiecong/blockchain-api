@@ -17,7 +17,7 @@ public interface DiskUTxOIndexService {
 
 	public DiskUTxOIndex readFromDisk(TxIn txIn);
 
-	public List<DiskUTxOIndex> readFromDiskByReceiver(byte[] receiver);
+	public List<DiskUTxOIndex> readFromDiskByReceiver(String receiver);
 
 	public void writeToDiskBlock(Block block);
 
